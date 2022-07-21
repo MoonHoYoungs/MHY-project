@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="생로병사"/>
+    <meta name="description" content="지우고 해당 html에 대한 설명 작성"/>
+    <title>책임GYM 쇼핑몰 찜 목록 보기</title>
+
+    <style>
+        .modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: none;
+
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal_body {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 400px;
+            height: 600px;
+
+            padding: 40px;
+
+            text-align: center;
+
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
+
+
+<body>
+
+<H1>찜목록 보기 페이지</H1>
+
+
+<div id="wishListViewDiv">
+
+</div>
+
+<h3 id="loginId" th:if="${session.login !=null}" th:text="${session.login.memberId}"
+    th:value="${session.login.memberId}"></h3>
+<h3 th:if="${session.login !=null}" th:text="${session.login.memberRole}"></h3>
+
+<div id="wishListView"></div>
+
+<div>
+    <button th:if="${session.login != null}" th:onclick="|location.href='@{basketForm}'|">장바구니로 가기</button>
+</div>
+</body>
+
+
+<script integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script th:inline="javascript">
+    var loginId = [[${session.login.memberId}]];
+
+    //wish 목록 불러오는 ajax
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "wishListAjax",
+            data: {"memberId": loginId},
+            dataType: "json",
+            success: function (wishList) {
+                wishListView(wishList);
+
+            }, error: function () {
+                alert("찜 목록 불러오기 실패")
+            }
+        })
+    })
+
+    function wishListView(wishList) {
+        var output = "";
+
+
+        output += "<table>";
+        output += "<caption>"+loginId+"님  찜 목록 페이지</caption>";
+        output += "<tr>";
+        output += "<th>상품사진</th>";
+        output += "<th>상품이름</th>";
+        output += "<th>상품 설명</th>";
+
+        output += "</tr>";
+
+        for (var i in wishList) {
+            output += "<tr>";
+            output += "<td><a href='shoppingView?productCode="+wishList[i].productCode+ "'><img src='ShoppingImg/"+wishList[i].productPhoto+"' style='width:100px'; height: 'auto';></a></td>";
+            output += "<td>" + wishList[i].productName + "</td>"
+            output += "<td>" + wishList[i].productComment + " </td>"
+            output += "<td><button value='" + wishList[i].productCode + "' onclick='wishDelete(this.value)'>찜에서 삭제</button>"
+            output += "<td><button value='" + wishList[i].productCode + "' onclick='shoppingView(this.value)'>장바구니에 담기</button>"
+        }
+
+        var myWish = document.getElementById("wishListViewDiv");
+        myWish.innerHTML = output;
+    }
+
+    function wishDelete(productCode) {
+        $.ajax({
+            type: "POST",
+            url: "/wishDelete",
+            data: {
+                "memberId": loginId,
+                "productCode": productCode
+            },
+            dataType: "json",
+            success: function () {
+                window.location.reload()
+            }, error: function () {
+                window.location.reload()
+            }
+        })
+
+    };
+
+
+    function shoppingView(productCode) {
+        var result = confirm("상품 상세보기에서 수량을 결정해주세요. 셍세보기로 이동합니다")
+        if (result) {
+            location.href = 'shoppingView?productCode=' + [productCode];
+        } else {
+        }
+    }
+
+</script>
+
+
+</html>
+
+
+
+

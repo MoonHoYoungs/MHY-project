@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Zay Shop - Product Detail Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css">
+    <!--
+
+    TemplateMo 559 Zay Shop
+
+    https://templatemo.com/tm-559-zay-shop
+
+    -->
+</head>
+
+<body>
+<!-- Start Top Nav -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+    <div class="container text-light">
+        <div class="w-100 d-flex justify-content-between">
+            <div>
+                <i class="fa fa-envelope mx-2"></i>
+                <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                <i class="fa fa-phone mx-2"></i>
+                <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+            </div>
+            <div>
+                <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Close Top Nav -->
+
+
+<!-- Header -->
+<header>
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="index1.html">
+                <img width="200" src="/image/logo1.png">
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+                 id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">게시판</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${session.login ne null}"
+                               th:href="@{myRoutineList(myRoutineId=${session.login.memberId})}">견적서</a>
+                            <a class="nav-link" th:if="${session.login eq null}" id="alert">견적서</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.html">쇼핑몰</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.html">고객센터</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" th:if="${session.login != null}" th:href="memberSignOut">로그아웃</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none"
+                       th:if="${session.login != null}"
+                       th:onclick="|location.href='@{memberView(memberId=${session.login.memberId})}'|">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- Close Header -->
+
+<!-- Modal -->
+<div class="modal" th:width="200" th:high="100">
+    <div class="modal_body">
+        <h1 id="wishRegistModel">추가되었습니다!</h1>
+
+        <p>장바구니로 가시겠습니까?</p>
+
+        <button th:onclick="|location.href='@{basketForm}'|">예</button>
+        <input type="button" name="continue" value="쇼핑계속하기" onclick="top.location.reload()";id="modelClose">
+    </div>
+</div>
+
+
+
+<!-- Open Content -->
+<section class="bg-light">
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-lg-5 mt-5">
+                <div class="card mb-3">
+                    <img class="card-img img-fluid" th:src="@{ShoppingImg/{aa}(aa=${view.productPhoto})}" alt="Card image cap" id="product-detail" >
+                </div>
+                <div class="row">
+                    <!--Start Controls-->
+                    <div class="col-1 align-self-center">
+                        <a href="#multi-item-example" role="button" data-bs-slide="prev">
+                            <i class="text-dark fas fa-chevron-left"></i>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+                    <!--Start Carousel Wrapper-->
+                    <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
+                        <!--Start Slides-->
+                        <div class="carousel-inner product-links-wap" role="listbox">
+
+                            <!--First slide-->
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <a href="#">
+                                            <img class="card-img img-fluid" th:src="@{ShoppingImg/{aa}(aa=${view.productPhoto})}" alt="Product Image 1">
+                                        </a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="#">
+                                            <img class="card-img img-fluid" th:src="@{ShoppingImg/{aa}(aa=${view.productPhoto})}" alt="Product Image 2">
+                                        </a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="#">
+                                            <img class="card-img img-fluid" th:src="@{ShoppingImg/{aa}(aa=${view.productPhoto})}" alt="Product Image 3">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/.First slide-->
+                        </div>
+                        <!--End Slides-->
+                    </div>
+                    <!--End Carousel Wrapper-->
+                    <!--Start Controls-->
+                    <div class="col-1 align-self-center">
+                        <a href="#multi-item-example" role="button" data-bs-slide="next">
+                            <i class="text-dark fas fa-chevron-right"></i>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+                </div>
+            </div>
+            <!-- col end -->
+            <div class="col-lg-7 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h2" th:text="${view.productName}"></h1>
+                        <p class="h3 py-2" th:text="${view.productPrice}">원</p>
+                        <p class="py-2">
+                            <i class="fa fa-star text-warning"></i>
+                            <i class="fa fa-star text-warning"></i>
+                            <i class="fa fa-star text-warning"></i>
+                            <i class="fa fa-star text-warning"></i>
+                            <i class="fa fa-star text-secondary"></i>
+                            <span class="list-inline-item text-dark" th:text="${view.productRate}"></span>
+                        </p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>중량:</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-primary" th:text="${view.productWeight}">g</p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h6>g</h6>
+                            </li>
+                        </ul>
+
+                        <h6>상품 설명:</h6>
+                        <p th:text="${view.productComment}"></p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>상품 칼로리 :</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-primary" th:text="${view.productKcal}"></p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h6>Kcal</h6>
+                            </li>
+                        </ul>
+
+                        <h6>영양 성분</h6>
+                        <ul class="list-unstyled pb-3">
+                            <li class="list-inline-item">
+                                <h6>탄수화물 :</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-primary" th:text="${view.productCarbohydrate}"></p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h6>g</h6>
+                            </li>
+                            <br/>
+                            <li class="list-inline-item">
+                                <h6>단백질 :</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-primary" th:text="${view.productProtein}"></p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h6>g</h6>
+                            </li>
+                            <br/>
+                            <li class="list-inline-item">
+                                <h6>지방 :</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-primary" th:text="${view.productFat}"></p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h6>g</h6>
+                            </li>
+                            <br/>
+                            <li class="list-inline-item">
+                                <h6>나트륨 :</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-primary" th:text="${view.productSalt}"></p>
+                            </li>
+                            <li class="list-inline-item">
+                                <h6>mg</h6>
+                            </li>
+                        </ul>
+
+                        <div class="row">
+                            <div class="col-auto" style="padding-top: 0px; padding-right: 12px; padding-bottom: 50px; padding-left: 12px">
+                                <span class="text-black">상품 수량 선택</span><br/>
+                                <select name="productName" onchange="productOrder(this)">
+                                    <option>상품 수량을 선택해주세요</option>
+                                    <option th:id="${view.productPrice} * 5" th:value="${view.productPrice} * 5"
+                                            th:text="${view.productName} + '5팩'" th:class="5" th:data-count="${view.productName} + '5팩'"></option>
+                                    <option th:id="${view.productPrice} * 10" th:value="${view.productPrice} * 10"
+                                            th:text="${view.productName} + '10팩'" th:class="10"
+                                            th:data-count="${view.productName} + '10팩'"></option>
+                                    <option th:id="${view.productPrice} * 15" th:value="${view.productPrice} * 15"
+                                            th:text="${view.productName} + '15팩'" th:class="15"
+                                            th:data-count="${view.productName} + '15팩'"></option>
+                                    <option th:id="${view.productPrice} * 20" th:value="${view.productPrice} * 20"
+                                            th:text="${view.productName} + '20팩'" th:class="20"
+                                            th:data-count="${view.productName} + '20팩'"></option>
+                                </select>
+                                <div id='result' style="float: right; padding-left: 400px;"></div>
+                            </div>
+
+                            <div style="float: right"  >
+                                <div id="wishDeleteDiv" >
+                                    <button id='wishDelete' >찜목록삭제</button>
+                                </div>
+                                <div id="wishRegistDiv" >
+                                    <button id='wishRegist' >찜목록추가</button>
+                                </div>
+
+                                <div id="basketDeleteDiv" >
+                                    <button id='basketDelete' >장바구니삭제</button>
+                                </div>
+                                <div id="basketRegisterDiv" >
+                                    <button id='basketRegist' >장바구니추가</button>
+                                </div>
+                            </div>
+                                <div class="col d-grid">
+                                    <button th:if ="${session.login != null}" th:onclick ="|location.href='@{shoppingWishForm}'|" class="btn btn-success btn-lg">내 찜목록</button>
+                                </div>
+                                <div class="col d-grid">
+                                    <button th:if ="${session.login != null}" th:onclick = "|location.href='@{basketForm}'|" class="btn btn-success btn-lg">장바구니</button>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Close Content -->
+
+<div id="reviewArea"></div>
+<!-- Start Article -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-left p-2 pb-3">
+            <h4>관련 상품</h4>
+        </div>
+
+        <!--Start Carousel Wrapper-->
+        <div id="carousel-related-product">
+
+            <div class="p-2 pb-3">
+                <div class="product-wap card rounded-0">
+                    <div class="card rounded-0">
+                        <img class="card-img rounded-0 img-fluid" th:src="@{ShoppingImg/{aa}(aa=${view.productPhoto})}">
+                        <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                            <ul class="list-unstyled">
+                                <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <a href="shop-single.html" class="h3 text-decoration-none" th:text="${view.productName}"></a>
+                        <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                            <li>M/L/X/XL</li>
+                            <li class="pt-2">
+                                <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled d-flex justify-content-center mb-1">
+                            <li>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-muted fa fa-star"></i>
+                            </li>
+                        </ul>
+                        <p class="text-center mb-0">$20.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2 pb-3">
+                <div class="product-wap card rounded-0">
+                    <div class="card rounded-0">
+                        <img class="card-img rounded-0 img-fluid" th:src="@{ShoppingImg/{aa}(aa=${view.productPhoto})}">
+                        <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                            <ul class="list-unstyled">
+                                <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <a href="shop-single.html" class="h3 text-decoration-none" th:text="${view.productName}"></a>
+                        <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                            <li>M/L/X/XL</li>
+                            <li class="pt-2">
+                                <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled d-flex justify-content-center mb-1">
+                            <li>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-muted fa fa-star"></i>
+                                <i class="text-muted fa fa-star"></i>
+                            </li>
+                        </ul>
+                        <p class="text-center mb-0">$25.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2 pb-3">
+                <div class="product-wap card rounded-0">
+                    <div class="card rounded-0">
+                        <img class="card-img rounded-0 img-fluid" th:src="@{ShoppingImg/{aa}(aa=${view.productPhoto})}">
+                        <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                            <ul class="list-unstyled">
+                                <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <a href="shop-single.html" class="h3 text-decoration-none" th:text="${view.productName}"></a>
+                        <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                            <li>M/L/X/XL</li>
+                            <li class="pt-2">
+                                <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled d-flex justify-content-center mb-1">
+                            <li>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                            </li>
+                        </ul>
+                        <p class="text-center mb-0">$45.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2 pb-3">
+                <div class="product-wap card rounded-0">
+                    <div class="card rounded-0">
+                        <img class="card-img rounded-0 img-fluid" th:src="@{ShoppingImg/{aa}(aa=${view.productPhoto})}">
+                        <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                            <ul class="list-unstyled">
+                                <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <a href="shop-single.html" class="h3 text-decoration-none" th:text="${view.productName}"></a>
+                        <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                            <li>M/L/X/XL</li>
+                            <li class="pt-2">
+                                <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled d-flex justify-content-center mb-1">
+                            <li>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-warning fa fa-star"></i>
+                                <i class="text-muted fa fa-star"></i>
+                                <i class="text-muted fa fa-star"></i>
+                            </li>
+                        </ul>
+                        <p class="text-center mb-0">$60.00</p>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+</section>
+<!-- End Article -->
+
+
+<!-- Start Footer -->
+<footer class="bg-dark" id="tempaltemo_footer">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 pt-5">
+                <h2 class="h2 text-success border-bottom pb-3 border-light logo">책임GYM</h2>
+                <ul class="list-unstyled text-light footer-link-list">
+                    <li>
+                        <i class="fas fa-map-marker-alt fa-fw"></i>
+                        서울 서초구 강남대로 429 동일빌딩
+                    </li>
+                    <li>
+                        <i class="fa fa-phone fa-fw"></i>
+                        <a class="text-decoration-none" href="tel:010-020-0340">002-6494-1100</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-envelope fa-fw"></i>
+                        <a class="text-decoration-none" href="mailto:info@company.com">responsibilitygym@gmail.com</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 pt-5">
+                <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                <ul class="list-unstyled text-light footer-link-list">
+                    <li><a class="text-decoration-none" href="#">닭가슴살</a></li>
+                    <li><a class="text-decoration-none" href="#">볶음밥/도시락</a></li>
+                    <li><a class="text-decoration-none" href="#">닭가슴살간식</a></li>
+                    <li><a class="text-decoration-none" href="#">보충제</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 pt-5">
+                <h2 class="h2 text-light border-bottom pb-3 border-light">More</h2>
+                <ul class="list-unstyled text-light footer-link-list">
+                    <li><a class="text-decoration-none" href="#">Home</a></li>
+                    <li><a class="text-decoration-none" href="#">About Us</a></li>
+                    <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
+                    <li><a class="text-decoration-none" href="#">FAQs</a></li>
+                    <li><a class="text-decoration-none" href="#">Contact</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="row text-light mb-4">
+            <div class="col-12 mb-3">
+                <div class="w-100 my-3 border-top border-light"></div>
+            </div>
+            <div class="col-auto me-auto">
+                <ul class="list-inline text-left footer-icons">
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                                class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                    </li>
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i
+                                class="fab fa-instagram fa-lg fa-fw"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-100 bg-black py-3">
+        <div class="container">
+            <div class="row pt-2">
+                <div class="col-12">
+                    <p class="text-left text-light">
+                        Copyright &copy; 2021 Company Name
+                        | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+</div>
+
+
+<!-- End Footer -->
+
+<!-- Start Script -->
+<script src="assets/js/jquery-1.11.0.min.js"></script>
+<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/templatemo.js"></script>
+<script src="assets/js/custom.js"></script>
+
+
+<!-- End Script -->
+
+<!-- Start Slider Script -->
+<script src="assets/js/slick.min.js"></script>
+<script>
+    $('#carousel-related-product').slick({
+        infinite: true,
+        arrows: false,
+        slidesToShow: 4,
+        slidesToScroll: 3,
+        dots: true,
+        responsive: [{
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3
+            }
+        },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            }
+        ]
+    });
+</script>
+<!-- End Slider Script -->
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script th:inline="javascript">
+
+    var login = [[${session.login.memberId}]];
+
+    var wishButtonView = 0;
+
+    var productCode = [[${view.productCode}]];
+
+    var orderPrice;
+
+    var productCount;
+
+    var orderNameRegist;
+
+    function productOrder(e) {
+        // 선택된 데이터 가져오기
+        const value = e.value;
+        orderPrice = (e.value).toString();
+        console.log("orderPrice"+ orderPrice);
+
+        productCount = $(this).attr('class');
+        var orderName = document.getElementById(e.value);
+        orderNameRegist = orderName.dataset.count;
+
+
+        const output = e.value + '원';
+
+        // 데이터 출력
+        document.getElementById('result').innerText
+            = output;
+    }
+
+    $(document).ready(function () {
+        // 리뷰 목록
+        $.ajax({
+            type: "POST",
+            url: "review/reviewList",
+            data: {"productCode": productCode},
+            dataType: "json",
+            success: function (list) {
+                reviewList(list);
+            },
+            error: function (request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
+        // 리뷰 작성 버튼 클릭 시
+        $('#reviewBtn').click(function () {
+            var loginId = $("#memberId").val();
+            console.log('아이디 : ' + loginId);
+            if (!loginId) {
+                alert('로그인 이후 사용할 수 있습니다.');
+                location.href = "index";
+            } else {
+                var productReviewWriter = loginId;
+                var productCode = document.getElementById("productCode").value;
+                var productReviewContent = $('#productReviewContent').val();
+                var productReviewRate = Math.round($('input[name="productReviewRate"]:checked').val());
+
+                console.log(productReviewWriter);
+                console.log(productCode);
+                console.log(productReviewContent);
+                console.log(productReviewRate);
+
+                $.ajax({
+                    type: "POST",
+                    url: "review/reviewRegist",
+                    data: {
+                        "productReviewWriter": productReviewWriter,
+                        "productCode": productCode,
+                        "productReviewContent": productReviewContent,
+                        "productReviewRate": productReviewRate
+                    },
+                    dataType: "json",
+                    success: function (list) {
+                        reviewList(list);
+                        $('#productReviewContent').val("");
+                        reload();
+                    },
+                    error: function () {
+                        alert('리뷰 등록 실패');
+                    }
+                });
+            }
+        });
+    });
+
+    // 리뷰 목록 조회 함수
+    function reviewList(list) {
+
+        var output = "";
+        var loginId = [[${session.login.memberId}]];
+
+        output += "<table>";
+        output += "<tr>";
+        output += "<th><작성자></th>";
+        output += "<th><내용></th>";
+        output += "<th><별점></th>";
+        output += "<th><작성일></th>";
+        output += "</tr>";
+
+        for (var i in list) {
+            output += "<tr>";
+            output += "<td>" + list[i].productReviewWriter + "</td>";
+            output += "<td>" + list[i].productReviewContent + "</td>";
+            output += "<td>" + list[i].productReviewRate + "</td>";
+            output += "<td>" + list[i].productReviewDate + "</td>";
+
+            if (list[i].productReviewWriter == loginId) {
+                output += "<td><button onclick=reviewModify(" + list[i].productReviewNo + ",'" + list[i].productCode + "')>수정</button></td>";
+            } else {
+                output += "<td><button onclick=reviewModify(" + list[i].productReviewNo + ",'" + list[i].productCode + "')>수정</button></td>";
+            }
+
+            // 작성자와 로그인한 아이디가 같거나 관리자일 경우에만 삭제 가능
+            if (list[i].productReviewWriter == loginId || loginId == 'admin111') {
+                output += "<td><button onclick=reviewDelete(" + list[i].productReviewNo + ",'" + list[i].productCode + "')>삭제</button></td>";
+            } else {
+                output += "<td><button>삭제</button></td>";
+            }
+
+            output += "</tr>";
+        }
+        output += "</table>";
+
+        // div 영역 reviewArea
+        var reviewArea = document.getElementById("reviewArea");
+
+        // reviewArea에 output 내용 넣기
+        reviewArea.innerHTML = output;
+    }
+
+    // 리뷰 삭제
+    function reviewDelete(productReviewNo, productCode) {
+        var check = confirm('리뷰를 삭제하시겠습니까?');
+        var productCode = [[${view.productCode}]];
+
+        if (check) {
+            $.ajax({
+                type: "POST",
+                url: "review/reviewDelete",
+                data: {"productReviewNo": productReviewNo, "productCode": productCode},
+                dataType: "json",
+                success: function (list) {
+                    reviewList(list);
+                    reload();
+                },
+                error: function () {
+                    alert('리뷰 삭제 실패');
+                }
+            });
+        }
+    }
+
+    //리뷰 수정
+    function reviewModify(productReviewNo, productCode) {
+        var check = confirm('리뷰를 수정하시겠습니까?');
+        var productReviewContent = $('#productReviewContent').val();
+        var productCode = [[${view.productCode}]];
+        var productReviewRate = $('input[name="productReviewRate"]:checked').val();
+
+        if (check) {
+            $.ajax({
+                type: "POST",
+                url: "review/reviewModify",
+                data: {
+                    "productReviewNo": productReviewNo,
+                    "productCode": productCode,
+                    "productReviewContent": productReviewContent,
+                    "productReviewRate": productReviewRate
+                },
+                dataType: "json",
+                success: function (list) {
+                    reviewList(list);
+                    reload();
+                },
+                error: function () {
+                    alert('리뷰 수정 실패');
+                }
+            });
+        }
+
+        function reload() {
+            history.go(0);
+        }
+    }
+
+    //장바구니에 존재하는지 확인하는 메소드
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/basketInquire",
+            data: {
+                "memberId": login,
+                "productCode": productCode
+            },
+            dataType: "json",
+            success: function (basketInquire) {
+                var basketButtonView = basketInquire.length;
+
+
+                if (basketButtonView > 0) {
+                    //찜에서 빼기 버튼 활성화
+                    document.getElementById("basketRegisterDiv").style.display = "none";
+                } else {
+                    document.getElementById("basketDeleteDiv").style.display = "none";
+
+                    //찜하기 버튼 활성화
+                }
+
+            }, error: function () {
+                alert("장바구니에 있는지 확인 불가");
+            }
+
+        })
+    })
+
+
+    //장바구니에서  빼기 ajax
+    $('#basketDelete').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/basketDelete",
+            data: {
+                "memberId": login,
+                "productCode": productCode
+            },
+            dataType: "json",
+            success: function () {
+                const modalView = 0;
+                basketButtonViewAjax(modalView);
+            }, error: function () {
+                alert("장바구니에서 제거 실패")
+
+            }
+        })
+
+    });
+
+    //장바구니에 넣기 ajax
+    $('#basketRegist').click(function () {
+
+        console.log("장바구니 등록");
+        console.log(productCode);
+        console.log(orderPrice);
+        console.log(orderNameRegist);
+
+        $.ajax({
+            type: "POST",
+            url: "/basketRegistAjax",
+            data: {
+                "memberId": login,
+                "productCode": productCode,
+                "orderPrice": orderPrice,
+                "orderName": orderNameRegist
+            },
+            dataType: "json",
+            success: function () {
+                const modalView = 1;
+                basketButtonViewAjax(modalView);
+                modal(modalView)
+            }, error: function () {
+                alert("수량을 먼저 선택해주세요")
+
+            }
+        })
+    });
+
+    function basketButtonViewAjax(modalView) {
+
+        if (modalView > 0) {
+            document.getElementById("basketRegisterDiv").style.display = "none";
+            document.getElementById("basketDeleteDiv").style.display = "";
+
+        } else {
+            document.getElementById("basketDeleteDiv").style.display = "none";
+            document.getElementById("basketRegisterDiv").style.display = "";
+        }
+
+    }
+
+    //  찜하기 function 찜 목록에 존재하는지 확인하는 ajax
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/wishInquire",
+            data: {
+                "memberId": login,
+                "productCode": productCode
+            },
+            dataType: "json",
+            success: function (wishInquire) {
+                wishButtonView = wishInquire.length;
+console.log(wishButtonView);
+                if (wishButtonView > 0) {
+                    //찜에서 빼기 버튼 활성화
+                    document.getElementById("wishRegistDiv").style.display = "none";
+                } else {
+                    document.getElementById("wishDeleteDiv").style.display = "none";
+
+                    //찜하기 버튼 활성화
+                }
+            }, error: function () {
+                alert("찜목록 확인후 버튼 체인지 에러");
+            }
+
+        })
+    })
+
+
+    // 찜에서 빼기 ajax
+    $('#wishDelete').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/wishDelete",
+            data: {
+                "memberId": login,
+                "productCode": productCode
+            },
+            dataType: "json",
+            success: function () {
+                document.getElementById("wishDeleteDiv").style.display = "none";
+                document.getElementById("wishRegistDiv").style.display = "";
+
+
+            }, error: function () {
+
+            }
+        })
+
+    });
+
+    // 찜에 넣기 ajax
+    $('#wishRegist').click(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/wishRegist",
+            data: {
+                "memberId": login,
+                "productCode": productCode
+            },
+            dataType: "json",
+            success: function () {
+                document.getElementById("wishDeleteDiv").style.display = "";
+                document.getElementById("wishRegistDiv").style.display = "none";
+
+            }, error: function () {
+
+            }
+        })
+    });
+
+
+    function modal(modalView) {
+        const body = document.querySelector('body');
+        const modal = document.querySelector('.modal');
+        modal.classList.toggle('show');
+        if (modal.classList.contains('show')) {
+            body.style.overflow = 'hidden';
+        }
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.toggle('show');
+
+                if (!modal.classList.contains('show')) {
+                    body.style.overflow = 'auto';
+                }
+            }
+        })
+    }
+
+    $('#modelClose').click(function () {
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.toggle('show');
+
+
+                if (!modal.classList.contains('show')) {
+                    body.style.overflow = 'auto';
+                }
+            }
+        })
+    })
+</script>
+</html>
